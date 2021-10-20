@@ -1,4 +1,3 @@
 # parcel-vanilla-jsx
-**Special Thanks to Jack Herrington** 
-Follow his channel
+**Thanks to Jack Herrington** 
 https://www.youtube.com/watch?v=4zRhgxctUYQ&ab_channel=JackHerrington
