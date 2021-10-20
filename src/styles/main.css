@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+a{
+  text-decoration: none;
+}
+.container {
+  padding: 1rem 5rem;
+}
+
+.active {
+  background-color: rgba(0,0,0,0.8);
+  color: #f4f4f4;
+}

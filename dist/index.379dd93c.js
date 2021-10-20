@@ -461,16 +461,17 @@ function hmrAcceptRun(bundle, id) {
 },{}],"hD4hw":[function(require,module,exports) {
 "use strict";
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
-var _dom = _interopRequireDefault(require("./dom"));
-/** @jsx dom */ const App = _dom.default("div", null, _dom.default("h1", null, "Hello World"), _dom.default("p", null, "This world is cool"), _dom.default("button", null, "Click Me"), [
-    1,
-    3,
-    4
-].map((e)=>_dom.default("p", null, e)
-));
-document.getElementById("app").appendChild(App);
+var _dom = _interopRequireDefault(require("../lib/dom"));
+require("./styles/main.css");
+var _Nav = _interopRequireDefault(require("./components/Nav"));
+var _Showcase = _interopRequireDefault(require("./components/Showcase"));
+var _Products = _interopRequireDefault(require("./components/Products"));
+/** @jsx dom */ const app = document.getElementById("app");
+app.appendChild(_Nav.default);
+app.appendChild(_Showcase.default);
+app.appendChild(_Products.default);
 
-},{"@babel/runtime-corejs2/helpers/interopRequireDefault":"f7fXK","./dom":"bpyiH"}],"f7fXK":[function(require,module,exports) {
+},{"@babel/runtime-corejs2/helpers/interopRequireDefault":"f7fXK","./components/Nav":"8adqN","./styles/main.css":"jf22y","../lib/dom":"7Hdvf","./components/Showcase":"l2Sue","./components/Products":"iBlce"}],"f7fXK":[function(require,module,exports) {
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
         "default": obj
@@ -479,37 +480,79 @@ function _interopRequireDefault(obj) {
 module.exports = _interopRequireDefault;
 module.exports["default"] = module.exports, module.exports.__esModule = true;
 
-},{}],"bpyiH":[function(require,module,exports) {
+},{}],"8adqN":[function(require,module,exports) {
 "use strict";
 var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
 var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
 _Object$defineProperty(exports, "__esModule", {
     value: true
 });
-exports.default = dom;
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
-var _isArray = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
-function dom(name, props, ...children) {
-    const elem = document.createElement(name);
-    _keys.default(props || {
-    }).forEach((attr)=>{
-        if (attr === 'style') _keys.default(props[attr]).forEach((sk)=>{
-            elem.style[sk] = props[attr][sk];
-        });
-        else elem[attr] = props[attr];
+exports.default = void 0;
+var _dom = _interopRequireDefault(require("../../lib/dom"));
+/** @jsx dom */ const navBar = {
+    width: "100vw",
+    height: "10vh",
+    boxShadow: "0 4px 8px -2px gray"
+};
+const navBarContainer = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+};
+const navItems = {
+    listStyleType: "none",
+    display: "flex"
+};
+const navItem = {
+    padding: ".5rem .75rem",
+    border: "1px solid transparent",
+    cursor: "pointer"
+};
+const handleNavBorderShow = (e)=>{
+    e.type === 'mouseover' ? e.target.style.border = "1px solid gray" : e.target.style.borderColor = "transparent";
+};
+const handleNavSelection = (e)=>{
+    document.querySelectorAll('.nav-item').forEach((item)=>{
+        if (item == e.target) e.target.classList.add('active');
+        else item.classList.remove('active');
     });
-    const addChild = (child)=>{
-        if (_isArray.default(child)) child.forEach((c)=>addChild(c)
-        );
-        else if (typeof child === 'object') elem.appendChild(child);
-        else elem.appendChild(document.createTextNode(child));
-    };
-    (children || []).forEach((c)=>addChild(c)
-    );
-    return elem;
-}
+};
+const Nav = _dom.default("nav", {
+    sx: navBar,
+    id: "nav-bar"
+}, _dom.default("div", {
+    className: "container",
+    sx: navBarContainer
+}, _dom.default("h1", {
+    id: "brand-logo"
+}, "Logo"), _dom.default("ul", {
+    sx: navItems
+}, [
+    {
+        name: 'Home',
+        link: "/"
+    },
+    {
+        name: 'About',
+        link: "/about"
+    },
+    {
+        name: 'Contact',
+        link: "/contact"
+    }
+].map((item)=>_dom.default("a", null, _dom.default("li", {
+        className: "nav-item",
+        sx: navItem,
+        onClick: handleNavSelection,
+        onMouseOver: handleNavBorderShow,
+        onMouseLeave: handleNavBorderShow
+    }, item.name))
+))));
+var _default = Nav;
+exports.default = _default;
 
-},{"@babel/runtime-corejs2/core-js/object/define-property":"cvfBW","@babel/runtime-corejs2/helpers/interopRequireDefault":"f7fXK","@babel/runtime-corejs2/core-js/object/keys":"ktfCw","@babel/runtime-corejs2/core-js/array/is-array":"eMv1m"}],"cvfBW":[function(require,module,exports) {
+},{"@babel/runtime-corejs2/core-js/object/define-property":"cvfBW","@babel/runtime-corejs2/helpers/interopRequireDefault":"f7fXK","../../lib/dom":"7Hdvf"}],"cvfBW":[function(require,module,exports) {
 module.exports = require("core-js/library/fn/object/define-property");
 
 },{"core-js/library/fn/object/define-property":"lt71N"}],"lt71N":[function(require,module,exports) {
@@ -745,7 +788,41 @@ module.exports = function(it, key) {
     return hasOwnProperty.call(it, key);
 };
 
-},{}],"ktfCw":[function(require,module,exports) {
+},{}],"7Hdvf":[function(require,module,exports) {
+"use strict";
+var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
+_Object$defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = dom;
+var _keys = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/object/keys"));
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs2/core-js/array/is-array"));
+function dom(name, props, ...children) {
+    const elem = document.createElement(name);
+    _keys.default(props || {
+    }).forEach((attr)=>{
+        if (attr.startsWith('on') && attr.toLowerCase() in window) {
+            let event = attr.toLowerCase().substr(2);
+            let listener = props[attr];
+            elem.addEventListener(event, listener);
+        } else if (attr === 'style' || attr === 'sx') _keys.default(props[attr]).forEach((sk)=>{
+            elem.style[sk] = props[attr][sk];
+        });
+        else elem[attr] = props[attr];
+    });
+    const addChild = (child)=>{
+        if (_isArray.default(child)) child.forEach((c)=>addChild(c)
+        );
+        else if (typeof child === 'object') elem.appendChild(child);
+        else elem.appendChild(document.createTextNode(child));
+    };
+    (children || []).forEach((c)=>addChild(c)
+    );
+    return elem;
+}
+
+},{"@babel/runtime-corejs2/core-js/object/define-property":"cvfBW","@babel/runtime-corejs2/helpers/interopRequireDefault":"f7fXK","@babel/runtime-corejs2/core-js/object/keys":"ktfCw","@babel/runtime-corejs2/core-js/array/is-array":"eMv1m"}],"ktfCw":[function(require,module,exports) {
 module.exports = require("core-js/library/fn/object/keys");
 
 },{"core-js/library/fn/object/keys":"eKOod"}],"eKOod":[function(require,module,exports) {
@@ -948,6 +1025,129 @@ module.exports = Array.isArray || function isArray(arg) {
     return cof(arg) == 'Array';
 };
 
-},{"./_cof":"25Xat"}]},["lBB98","hD4hw"], "hD4hw", "parcelRequire7b5d")
+},{"./_cof":"25Xat"}],"jf22y":[function() {},{}],"l2Sue":[function(require,module,exports) {
+"use strict";
+var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
+_Object$defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = void 0;
+var _dom = _interopRequireDefault(require("../../lib/dom"));
+/** @jsx dom */ const Showcase = _dom.default("div", {
+    sx: {
+        textAlign: "center",
+        margin: "2rem 0"
+    }
+}, _dom.default("h1", {
+    sx: {
+        fontSize: "48px"
+    }
+}, "Buy Online"), _dom.default("p", {
+    sx: {
+        fontSize: "32px"
+    }
+}, "Get 50% Off"));
+var _default = Showcase;
+exports.default = _default;
+
+},{"@babel/runtime-corejs2/core-js/object/define-property":"cvfBW","@babel/runtime-corejs2/helpers/interopRequireDefault":"f7fXK","../../lib/dom":"7Hdvf"}],"iBlce":[function(require,module,exports) {
+"use strict";
+var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
+var _interopRequireDefault = require("@babel/runtime-corejs2/helpers/interopRequireDefault");
+_Object$defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = void 0;
+var _dom = _interopRequireDefault(require("../../lib/dom"));
+/** @jsx dom */ const cartTracker = ()=>{
+    let state = [];
+    return (item)=>{
+        if (!item) return state;
+        state.push(item);
+        return state;
+    };
+};
+const addProduct = cartTracker();
+const handleCartItem = (product)=>{
+    // const addedProducts = addProduct(product)
+    document.getElementById('cart-items').appendChild(_dom.default("div", {
+        sx: {
+            display: "flex",
+            justifyContent: "space-between"
+        }
+    }, _dom.default("p", {
+        sx: {
+            width: "60%"
+        }
+    }, product.name), _dom.default("p", {
+        sx: {
+            width: "20%"
+        }
+    }, "1"), _dom.default("p", {
+        sx: {
+            width: "20%"
+        }
+    }, "$", product.price)));
+};
+const productsList = [
+    {
+        id: 1,
+        name: "Product One",
+        price: "250",
+        qty: 0
+    },
+    {
+        id: 2,
+        name: "Product Two",
+        price: "350",
+        qty: 0
+    },
+    {
+        id: 3,
+        name: "Product Three",
+        price: "179",
+        qty: 0
+    }
+];
+const Products = _dom.default("section", {
+    className: "container",
+    sx: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    }
+}, _dom.default("div", {
+    sx: {
+        width: "60%"
+    }
+}, _dom.default("h1", null, "Products"), productsList.map((item)=>_dom.default("div", {
+        sx: {
+            padding: "1rem",
+            border: "1px solid lightgray",
+            display: "inline-grid",
+            width: "45%",
+            marginRight: "1rem",
+            marginBottom: "1rem"
+        }
+    }, _dom.default("h3", null, item.name), _dom.default("p", null, "Price: $", item.price), _dom.default("button", {
+        sx: {
+            padding: ".25rem 1rem",
+            fontSize: "14px"
+        },
+        onClick: ()=>handleCartItem(item)
+    }, "Add To Cart"))
+)), _dom.default("div", {
+    sx: {
+        padding: "0 1rem",
+        width: "30%"
+    }
+}, _dom.default("h1", null, "Cart Items"), _dom.default("hr", null), _dom.default("div", {
+    id: "cart-items"
+})));
+var _default = Products;
+exports.default = _default;
+
+},{"@babel/runtime-corejs2/core-js/object/define-property":"cvfBW","@babel/runtime-corejs2/helpers/interopRequireDefault":"f7fXK","../../lib/dom":"7Hdvf"}]},["lBB98","hD4hw"], "hD4hw", "parcelRequirea0d9")
 
 //# sourceMappingURL=index.379dd93c.js.map
