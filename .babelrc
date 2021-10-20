@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": 2,
+        "regenerator": true
+      }
+    ],
+    [
+      "@babel/plugin-transform-react-jsx"
+    ],
+    [
+      "@babel/plugin-transform-modules-commonjs"
+    ]
+  ]
+}
